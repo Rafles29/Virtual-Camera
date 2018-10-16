@@ -60,6 +60,7 @@
     <Compile Include="VC\PerspectiveProjection.cs" />
     <Compile Include="VC\Point2D.cs" />
     <Compile Include="VC\VirtualCamera.cs" />
+    <Compile Include="VC\VirtualWorld.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

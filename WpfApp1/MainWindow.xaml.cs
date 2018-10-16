@@ -28,20 +28,20 @@ namespace WpfApp1
             StackPanel stackPanel = new StackPanel();
             this.Content = stackPanel;
 
-            this.Objects3D = new List<Object3D>();
-            this.VirtualCamera = new VirtualCamera(new Point3D(0.0, 0.0, 0.0), 2.0, 2.0, 2.0);
-            Cube cbe = new Cube(new Point3D(0.0, 0.0, 5.0), 2.0);
-            this.Objects3D.Add(cbe);
+            this.VirtualWorld = new VirtualWorld();
+
+            Cube cube = new Cube(new Point3D(0.0, 0.0, 5.0), 2.0);
+
+            this.VirtualWorld.AddElement(cube);
             this.Draw(stackPanel);
         }
-        public List<Object3D> Objects3D { get; set; }
+        public VirtualWorld VirtualWorld { get; set; }
         public List<Line> DrawLines { get; set; }
-        public VirtualCamera VirtualCamera { get; set; }
  
         public void Draw(StackPanel stackPanel)
         {
             this.DrawLines = new List<Line>();
-            List<Line2D> lines2D = this.VirtualCamera.Calculate(this.Objects3D);
+            List<Line2D> lines2D = this.VirtualWorld.Generate2D();
             this.ParseLine2D(lines2D);
             this.Scale(stackPanel);
             this.DrawFrame(stackPanel);
@@ -61,8 +61,8 @@ namespace WpfApp1
             var windowHeight = 1000;
             var windowWidth = 1000;
 
-            var cameraHeight = this.VirtualCamera.Height;
-            var cameraWidth = this.VirtualCamera.Width;
+            var cameraHeight = this.VirtualWorld.VirtualCamera.Height;
+            var cameraWidth = this.VirtualWorld.VirtualCamera.Width;
 
             double heightScale = windowHeight / cameraHeight;
             double widthScale = windowWidth / cameraWidth;
