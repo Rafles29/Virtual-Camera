@@ -28,16 +28,16 @@ namespace WpfApp1
         public double bottom;
         public double top;
 
-        public Line TrimLine(Line2D line)
+        public Line2D TrimLine(Line2D line)
         {
             return Cohen_Sutherland(line.A.X, line.A.Y, line.B.X, line.B.Y);
         }
-        public List<Line> TrimLines(List<Line2D> lines)
+        public List<Line2D> TrimLines(List<Line2D> lines)
         {
-            List<Line> drawLines = new List<Line>();
+            List<Line2D> drawLines = new List<Line2D>();
             foreach (var line in lines)
             {
-                Line drawLine = this.TrimLine(line);
+                Line2D drawLine = this.TrimLine(line);
                 if(drawLine != null)
                     drawLines.Add(drawLine);
             }
@@ -55,7 +55,7 @@ namespace WpfApp1
             return result;
         }
 
-        private Line Cohen_Sutherland(double x1, double y1, double x2, double y2)
+        private Line2D Cohen_Sutherland(double x1, double y1, double x2, double y2)
         {
             byte rcode1, rcode2, rcode;
 
@@ -71,11 +71,9 @@ namespace WpfApp1
 
             else if ((rcode1 | rcode2) == 0)
             {
-                Line drawLine = new Line();
-                drawLine.X1 = x1;
-                drawLine.X2 = x2;
-                drawLine.Y1 = y1;
-                drawLine.Y2 = y2;
+                Point2D A = new Point2D(x1, y1);
+                Point2D B = new Point2D(x2, y2);
+                Line2D drawLine = new Line2D(A, B);
                 return drawLine;
             }
             else
@@ -126,11 +124,9 @@ namespace WpfApp1
 
                 if ((rcode1 | rcode2) == 0)
                 {
-                    Line drawLine = new Line();
-                    drawLine.X1 = x1;
-                    drawLine.X2 = x2;
-                    drawLine.Y1 = y1;
-                    drawLine.Y2 = y2;
+                    Point2D A = new Point2D(x1, y1);
+                    Point2D B = new Point2D(x2, y2);
+                    Line2D drawLine = new Line2D(A, B);
                     return drawLine;
                 }
                 else

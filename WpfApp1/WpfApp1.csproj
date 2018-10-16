@@ -55,18 +55,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CohenSutherland.cs" />
-    <Compile Include="Line2D.cs" />
-    <Compile Include="PerspectiveProjection.cs" />
-    <Compile Include="Point2D.cs" />
-    <Compile Include="VirtualCamera.cs" />
+    <Compile Include="VC\CohenSutherland.cs" />
+    <Compile Include="VC\Line2D.cs" />
+    <Compile Include="VC\PerspectiveProjection.cs" />
+    <Compile Include="VC\Point2D.cs" />
+    <Compile Include="VC\VirtualCamera.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Cube.cs" />
-    <Compile Include="Line3D.cs" />
-    <Compile Include="Object3D.cs" />
+    <Compile Include="VC\Cube.cs" />
+    <Compile Include="VC\Line3D.cs" />
+    <Compile Include="VC\Object3D.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -77,7 +77,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Point3D.cs" />
+    <Compile Include="VC\Point3D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

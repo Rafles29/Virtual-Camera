@@ -29,22 +29,20 @@ namespace WpfApp1
             this.Content = stackPanel;
 
             this.Objects3D = new List<Object3D>();
-            this.VirtualCamera = new VirtualCamera(2.0);
-            this.PerspectiveProjection = new PerspectiveProjection();
-            this.CohenSutherland = new CohenSutherland(new Point2D(0.0, 0.0), 2.0, 2.0);
+            this.VirtualCamera = new VirtualCamera(new Point3D(0.0, 0.0, 0.0), 2.0, 2.0, 2.0);
             Cube cbe = new Cube(new Point3D(0.0, 0.0, 5.0), 2.0);
             this.Objects3D.Add(cbe);
             this.Draw(stackPanel);
         }
         public List<Object3D> Objects3D { get; set; }
-        public List<Line2D> Lines { get; set; }
         public List<Line> DrawLines { get; set; }
         public VirtualCamera VirtualCamera { get; set; }
-        public PerspectiveProjection PerspectiveProjection { get; set; }
-        public CohenSutherland CohenSutherland { get; set; }
+ 
         public void Draw(StackPanel stackPanel)
         {
-            this.Calculate();
+            this.DrawLines = new List<Line>();
+            List<Line2D> lines2D = this.VirtualCamera.Calculate(this.Objects3D);
+            this.ParseLine2D(lines2D);
             this.Scale(stackPanel);
             this.DrawFrame(stackPanel);
         }
@@ -54,7 +52,7 @@ namespace WpfApp1
             {
                 line.Stroke = System.Windows.Media.Brushes.Black;
                 line.StrokeThickness = 2;
-               // Console.WriteLine("Linijka:" + line.X1 + " " + line.Y1 + " " + line.X2 + " " + line.Y2);
+                //Console.WriteLine("Linijka:" + line.X1 + " " + line.Y1 + " " + line.X2 + " " + line.Y2);
                 myGrid.Children.Add(line);
             }
         }
@@ -63,8 +61,8 @@ namespace WpfApp1
             var windowHeight = 1000;
             var windowWidth = 1000;
 
-            var cameraHeight = CohenSutherland.Height;
-            var cameraWidth = CohenSutherland.Width;
+            var cameraHeight = this.VirtualCamera.Height;
+            var cameraWidth = this.VirtualCamera.Width;
 
             double heightScale = windowHeight / cameraHeight;
             double widthScale = windowWidth / cameraWidth;
@@ -77,16 +75,21 @@ namespace WpfApp1
                 line.Y2 = windowHeight/2 + line.Y2 * heightScale *-1;
             }
         }
-        private void Calculate()
-        {
-            List<Line3D> tmpList = new List<Line3D>();
-            foreach (var obj in this.Objects3D)
+        private void ParseLine2D(List<Line2D> lines2D)
+        {           
+            foreach (var line2d in lines2D)
             {
-                tmpList.AddRange(obj.GetLines());
+                Line line = new Line()
+                {
+                    Stroke = Brushes.Black,
+                    StrokeThickness = 2,
+                    X1 = line2d.A.X,
+                    X2 = line2d.B.X,
+                    Y1 = line2d.A.Y,
+                    Y2 = line2d.B.Y,
+                };
+                this.DrawLines.Add(line);
             }
-            this.Lines = this.PerspectiveProjection.Project(tmpList, this.VirtualCamera.d);
-            List<Line> dLines = this.CohenSutherland.TrimLines(this.Lines);
-            this.DrawLines = dLines;
         }
     }
 }
