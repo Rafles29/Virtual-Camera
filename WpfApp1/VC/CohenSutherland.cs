@@ -66,7 +66,7 @@ namespace WpfApp1
 
             if ((rcode1 & rcode2) != 0)
             {
-
+                return null;
             }
 
             else if ((rcode1 | rcode2) == 0)
@@ -114,11 +114,15 @@ namespace WpfApp1
 
                     if (rcode == rcode1)
                     {
-
+                        x1 = x;
+                        y1 = y;
+                        rcode1 = calcRegCode(x1, y1);
                     }
                     else
                     {
-
+                        x2 = x;
+                        y2 = y;
+                        rcode2 = calcRegCode(x2, y2);
                     }
                 } while ((rcode1 & rcode2) == 0 && (rcode1 | rcode2) != 0);
 
