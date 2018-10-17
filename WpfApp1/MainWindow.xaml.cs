@@ -25,38 +25,22 @@ namespace WpfApp1
         {
             InitializeComponent();
 
-            StackPanel stackPanel = new StackPanel();
-            this.Content = stackPanel;
-
             this.VirtualWorld = new VirtualWorld();
 
             Cube cube = new Cube(new Point3D(0.0, 0.0, 5.0), 2.0);
-
+            stackpanel.Background = Brushes.Yellow;
             this.VirtualWorld.AddElement(cube);
-            this.Draw(stackPanel);
+            this.Draw(stackpanel);
         }
         public VirtualWorld VirtualWorld { get; set; }
-        public List<Line> DrawLines { get; set; }
  
         public void Draw(StackPanel stackPanel)
         {
-            this.DrawLines = new List<Line>();
             List<Line2D> lines2D = this.VirtualWorld.Generate2D();
-            this.ParseLine2D(lines2D);
-            this.Scale(stackPanel);
-            this.DrawFrame(stackPanel);
+            List<Line2D> scaledLines2D = this.Scale(stackPanel, lines2D);
+            this.DrawLines(stackPanel, scaledLines2D);
         }
-        private void DrawFrame(StackPanel myGrid)
-        {
-            foreach (var line in this.DrawLines)
-            {
-                line.Stroke = System.Windows.Media.Brushes.Black;
-                line.StrokeThickness = 2;
-                //Console.WriteLine("Linijka:" + line.X1 + " " + line.Y1 + " " + line.X2 + " " + line.Y2);
-                myGrid.Children.Add(line);
-            }
-        }
-        private void Scale(StackPanel myGrid)
+        private List<Line2D> Scale(StackPanel stackPanel, List<Line2D> lines)
         {
             var windowHeight = 1000;
             var windowWidth = 1000;
@@ -67,28 +51,36 @@ namespace WpfApp1
             double heightScale = windowHeight / cameraHeight;
             double widthScale = windowWidth / cameraWidth;
 
-            foreach (var line in this.DrawLines)
+            List<Line2D> output = new List<Line2D>();
+
+            foreach (var line in lines)
             {
-                line.X1 = windowWidth/2 + line.X1 * widthScale;
-                line.X2 = windowWidth/2 + line.X2 * widthScale;
-                line.Y1 = windowHeight/2 + line.Y1 * heightScale *-1;
-                line.Y2 = windowHeight/2 + line.Y2 * heightScale *-1;
+                Point2D A = new Point2D(windowWidth / 2 + line.A.X * widthScale, windowHeight / 2 + line.A.Y * heightScale * -1);
+                Point2D B = new Point2D(windowWidth / 2 + line.B.X * widthScale, windowHeight / 2 + line.B.Y * heightScale * -1);
+                Line2D newLine = new Line2D(A,B);
+                output.Add(newLine);
             }
+            return output;
         }
-        private void ParseLine2D(List<Line2D> lines2D)
-        {           
-            foreach (var line2d in lines2D)
+
+        private void DrawLine(StackPanel stackPanel, Line2D line2D)
+        {
+            Line line = new Line()
             {
-                Line line = new Line()
-                {
-                    Stroke = Brushes.Black,
-                    StrokeThickness = 2,
-                    X1 = line2d.A.X,
-                    X2 = line2d.B.X,
-                    Y1 = line2d.A.Y,
-                    Y2 = line2d.B.Y,
-                };
-                this.DrawLines.Add(line);
+                Stroke = Brushes.Black,
+                StrokeThickness = 2,
+                X1 = line2D.A.X,
+                X2 = line2D.B.X,
+                Y1 = line2D.A.Y,
+                Y2 = line2D.B.Y,
+            };
+            stackpanel.Children.Add(line);
+        }
+        private void DrawLines(StackPanel stackPanel, List<Line2D> lines)
+        {
+            foreach (var line in lines)
+            {
+                this.DrawLine(stackPanel, line);
             }
         }
     }
