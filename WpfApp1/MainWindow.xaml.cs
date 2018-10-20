@@ -24,27 +24,113 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+            this.WorldInit();
+            this.Draw(canvas);
+        }
+        public VirtualWorld VirtualWorld { get; set; }
 
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+
+                case Key.Left:
+                    Console.WriteLine("left");
+                    this.VirtualWorld.Rotate(Direction.LEFT);
+                    this.Draw(canvas);
+                    break;
+                case Key.Up:
+                    Console.WriteLine("up");
+                    this.VirtualWorld.Rotate(Direction.UP);
+                    this.Draw(canvas);
+                    break;
+                case Key.Right:
+                    Console.WriteLine("right");
+                    this.VirtualWorld.Rotate(Direction.RIGHT);
+                    this.Draw(canvas);
+                    break;
+                case Key.Down:
+                    Console.WriteLine("down");
+                    this.VirtualWorld.Rotate(Direction.DOWN);
+                    this.Draw(canvas);
+                    break;
+
+                case Key.W:
+                    Console.WriteLine("w");
+                    this.VirtualWorld.Move(Direction.BACKWARD);
+                    this.Draw(canvas);
+                    break;
+                case Key.S:
+                    Console.WriteLine("s");
+                    this.VirtualWorld.Move(Direction.FORWARD);
+                    this.Draw(canvas);
+                    break;
+                case Key.A:
+                    Console.WriteLine("a");
+                    this.VirtualWorld.Move(Direction.RIGHT);
+                    this.Draw(canvas);
+                    break;
+                case Key.D:
+                    Console.WriteLine("d");
+                    this.VirtualWorld.Move(Direction.LEFT);
+                    this.Draw(canvas);
+                    break;
+                case Key.LeftShift:
+                    Console.WriteLine("shift");
+                    this.VirtualWorld.Move(Direction.DOWN);
+                    this.Draw(canvas);
+                    break;
+                case Key.LeftCtrl:
+                    Console.WriteLine("ctrl");
+                    this.VirtualWorld.Move(Direction.UP);
+                    this.Draw(canvas);
+                    break;
+
+                case Key.Q:
+                    Console.WriteLine("q");
+                    this.VirtualWorld.ZoomIn();
+                    this.Draw(canvas);
+                    break;
+                case Key.E:
+                    Console.WriteLine("e");
+                    this.VirtualWorld.ZoomOut();
+                    this.Draw(canvas);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void WorldInit()
+        {
             this.VirtualWorld = new VirtualWorld();
-
-            //this.canvas.Background = Brushes.Yellow;
-
             Cube cube = new Cube(new Point3D(2.0, -2.0, 10.0), 3.0);
             Cube cube2 = new Cube(new Point3D(-2.0, -2.0, 10.0), 3.0);
             Cube cube3 = new Cube(new Point3D(2.0, 2.0, 10.0), 3.0);
             Cube cube4 = new Cube(new Point3D(-2.0, 2.0, 10.0), 3.0);
+            Cube cube5 = new Cube(new Point3D(2.0, -2.0, 14.0), 3.0);
+            Cube cube6 = new Cube(new Point3D(-2.0, -2.0, 14.0), 3.0);
+            Cube cube7 = new Cube(new Point3D(2.0, 2.0, 14.0), 3.0);
+            Cube cube8 = new Cube(new Point3D(-2.0, 2.0, 14.0), 3.0);
 
             this.VirtualWorld.AddElement(cube);
             this.VirtualWorld.AddElement(cube2);
             this.VirtualWorld.AddElement(cube3);
             this.VirtualWorld.AddElement(cube4);
+            this.VirtualWorld.AddElement(cube5);
+            this.VirtualWorld.AddElement(cube6);
+            this.VirtualWorld.AddElement(cube7);
+            this.VirtualWorld.AddElement(cube8);
 
-            this.Draw(canvas);
         }
-        public VirtualWorld VirtualWorld { get; set; }
- 
+        public void ClearFrame(Canvas canvas)
+        {
+            this.canvas.Children.Clear();
+        }
+
         public void Draw(Canvas canvas)
         {
+            this.canvas.Children.Clear();
             List<Line2D> lines2D = this.VirtualWorld.Generate2D();
             List<Line2D> scaledLines2D = this.Scale(canvas, lines2D);
             this.DrawLines(canvas, scaledLines2D);

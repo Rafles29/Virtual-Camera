@@ -30,6 +30,13 @@ namespace WpfApp1
                 line.Move(direction);
             }
         }
+        public override void Rotate(Direction direction)
+        {
+            foreach (var line in this.Lines)
+            {
+                line.Rotate(direction);
+            }
+        }
         private void LowerBase(Point3D middle, double sideLength)
         {
             double half = sideLength / 2.0;

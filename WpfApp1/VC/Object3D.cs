@@ -13,6 +13,7 @@ namespace WpfApp1
     public abstract class Object3D
     {
         public abstract void Move(Direction direction);
+        public abstract void Rotate(Direction direction);
         public abstract List<Line3D> GetLines();
     }
 }

@@ -46,6 +46,41 @@ namespace WpfApp1
             }
         }
 
+        public override void Rotate(Direction direction)
+        {
+            double angle = 0.01;
+            double x2, y2, z2;
+            switch (direction)
+            {
+                case Direction.UP:
+                    y2 = this.Y;
+                    z2 = this.Z;
+                    this.Y = y2 * Math.Cos(angle) - z2* Math.Sin(angle);
+                    this.Z = y2 * Math.Sin(angle) + z2* Math.Cos(angle);
+                    break;
+                case Direction.DOWN:
+                    y2 = this.Y;
+                    z2 = this.Z;
+                    this.Y = y2 * Math.Cos(-angle) - z2 * Math.Sin(-angle);
+                    this.Z = y2 * Math.Sin(-angle) + z2 * Math.Cos(-angle);
+                    break;
+                case Direction.LEFT:
+                    x2 = this.X;
+                    z2 = this.Z;
+                    this.X = x2 * Math.Cos(angle) + z2 * Math.Sin(angle);
+                    this.Z = -1 * x2 * Math.Sin(angle) + z2 * Math.Cos(angle);
+                    break;
+                case Direction.RIGHT:
+                    x2 = this.X;
+                    z2 = this.Z;
+                    this.X = x2 * Math.Cos(-angle) + z2 * Math.Sin(-angle);
+                    this.Z = -1 * x2 * Math.Sin(-angle) + z2 * Math.Cos(-angle);
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public override string ToString()
         {
             return this.X.ToString() + " " + this.Y.ToString() + " " + this.Z.ToString();

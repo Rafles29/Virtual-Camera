@@ -28,6 +28,21 @@ namespace WpfApp1
                 obj.Move(direction);
             }
         }
+        public void Rotate(Direction direction)
+        {
+            foreach (var obj in Objects)
+            {
+                obj.Rotate(direction);
+            }
+        }
+        public void ZoomIn()
+        {
+            this.VirtualCamera.ZoomIn();
+        }
+        public void ZoomOut()
+        {
+            this.VirtualCamera.ZoomOut();
+        }
         public List<Line2D> Generate2D()
         {
             return this.VirtualCamera.Calculate(Objects);

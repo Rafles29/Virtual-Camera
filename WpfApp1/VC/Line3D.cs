@@ -22,6 +22,11 @@ namespace WpfApp1
             this.A.Move(direction);
             this.B.Move(direction);
         }
+        public override void Rotate(Direction direction)
+        {
+            this.A.Rotate(direction);
+            this.B.Rotate(direction);
+        }
 
         public override string ToString()
         {
