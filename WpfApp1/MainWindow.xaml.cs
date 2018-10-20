@@ -137,8 +137,8 @@ namespace WpfApp1
         }
         private List<Line2D> Scale(Canvas canvas, List<Line2D> lines)
         {
-            var windowHeight = 1000;
-            var windowWidth = 1000;
+            var windowHeight = canvas.Height;
+            var windowWidth = canvas.Width;
 
             var cameraHeight = this.VirtualWorld.VirtualCamera.Height;
             var cameraWidth = this.VirtualWorld.VirtualCamera.Width;

@@ -49,8 +49,8 @@ namespace WpfApp1
 
             if (x < left) result |= 0x1;
             if (x > right) result |= 0x2;
-            if (y > top) result |= 0x4;
-            if (y < bottom) result |= 0x8;
+            if (y > top) result |= 0x8;
+            if (y < bottom) result |= 0x4;
 
             return result;
         }
