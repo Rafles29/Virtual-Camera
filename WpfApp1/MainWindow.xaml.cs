@@ -54,6 +54,16 @@ namespace WpfApp1
                     this.VirtualWorld.Rotate(Direction.DOWN);
                     this.Draw(canvas);
                     break;
+                case Key.O:
+                    Console.WriteLine("o");
+                    this.VirtualWorld.Rotate(Direction.FORWARD);
+                    this.Draw(canvas);
+                    break;
+                case Key.P:
+                    Console.WriteLine("p");
+                    this.VirtualWorld.Rotate(Direction.BACKWARD);
+                    this.Draw(canvas);
+                    break;
 
                 case Key.W:
                     Console.WriteLine("w");

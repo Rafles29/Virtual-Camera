@@ -76,6 +76,18 @@ namespace WpfApp1
                     this.X = x2 * Math.Cos(-angle) + z2 * Math.Sin(-angle);
                     this.Z = -1 * x2 * Math.Sin(-angle) + z2 * Math.Cos(-angle);
                     break;
+                case Direction.FORWARD:
+                    x2 = this.X;
+                    y2 = this.Y;
+                    this.X = x2 * Math.Cos(angle) - y2 * Math.Sin(angle);
+                    this.Y = x2 * Math.Sin(angle) + y2 * Math.Cos(angle);
+                    break;
+                case Direction.BACKWARD:
+                    x2 = this.X;
+                    y2 = this.Y;
+                    this.X = x2 * Math.Cos(-angle) - y2 * Math.Sin(-angle);
+                    this.Y = x2 * Math.Sin(-angle) + y2 * Math.Cos(-angle);
+                    break;
                 default:
                     break;
             }
