@@ -46,5 +46,14 @@ namespace WpfApp1
             List<Line2D> visibleLines2D = this.CohenSutherland.TrimLines(lineList2D);
             return visibleLines2D;
         }
+        public List<Wall2D> Calculate(List<Wall3D> walls)
+        {
+            walls.Sort(delegate(Wall3D x, Wall3D y)
+            {
+                return y.Distance(this.Observator).CompareTo(x.Distance(this.Observator));
+            });
+            List<Wall2D> wall2Ds = this.PerspectiveProjection.Project(walls, this.d);
+            return wall2Ds;
+        }
     }
 }

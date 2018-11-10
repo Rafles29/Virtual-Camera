@@ -6,33 +6,34 @@ using System.Threading.Tasks;
 
 namespace WpfApp1
 {
-    public class Cube : Object3D
+    public class Cube 
     {
-        public Cube(List<Line3D> lines)
-        {
-            Lines = lines;
-        }
 
         public Cube(Point3D middle, double sideLength)
         {
-            this.Lines = new List<Line3D>();
+            this.Walls = new List<Wall3D>();
             this.LowerBase(middle, sideLength);
             this.UpperBase(middle, sideLength);
             this.Sides(middle, sideLength);
         }
 
-        public List<Line3D> Lines { get; set; }
-
-        public override void Move(Direction direction)
+        public Cube(List<Wall3D> walls)
         {
-            foreach (var line in this.Lines)
+            Walls = walls;
+        }
+
+        public List<Wall3D> Walls { get; set; }
+
+        public void Move(Direction direction)
+        {
+            foreach (var line in this.Walls)
             {
                 line.Move(direction);
             }
         }
-        public override void Rotate(Direction direction)
+        public void Rotate(Direction direction)
         {
-            foreach (var line in this.Lines)
+            foreach (var line in this.Walls)
             {
                 line.Rotate(direction);
             }
@@ -41,66 +42,44 @@ namespace WpfApp1
         {
             double half = sideLength / 2.0;
 
-            Line3D line = new Line3D(new Point3D(middle.X-half,middle.Y-half,middle.Z-half), new Point3D(middle.X - half, middle.Y - half, middle.Z + half));
-            this.Lines.Add(line);
-
-            line = new Line3D(new Point3D(middle.X - half, middle.Y - half, middle.Z - half), new Point3D(middle.X + half, middle.Y - half, middle.Z - half));
-            this.Lines.Add(line);
-
-            line = new Line3D(new Point3D(middle.X + half, middle.Y - half, middle.Z + half), new Point3D(middle.X - half, middle.Y - half, middle.Z + half));
-            this.Lines.Add(line);
-
-            line = new Line3D(new Point3D(middle.X + half, middle.Y - half, middle.Z + half), new Point3D(middle.X + half, middle.Y - half, middle.Z - half));
-            this.Lines.Add(line);
+            Wall3D wall = new Wall3D(new Point3D(middle.X - half , middle.Y - half, middle.Z - half), new Point3D(middle.X - half, middle.Y - half, middle.Z + half), new Point3D(middle.X + half, middle.Y - half, middle.Z + half), new Point3D(middle.X + half, middle.Y - half, middle.Z - half));
+            this.Walls.Add(wall);
         }
         private void UpperBase(Point3D middle, double sideLength)
         {
             double half = sideLength / 2.0;
 
-            Line3D line = new Line3D(new Point3D(middle.X - half, middle.Y + half, middle.Z - half), new Point3D(middle.X - half, middle.Y + half, middle.Z + half));
-            this.Lines.Add(line);
-
-            line = new Line3D(new Point3D(middle.X - half, middle.Y + half, middle.Z - half), new Point3D(middle.X + half, middle.Y + half, middle.Z - half));
-            this.Lines.Add(line);
-
-            line = new Line3D(new Point3D(middle.X + half, middle.Y + half, middle.Z + half), new Point3D(middle.X - half, middle.Y + half, middle.Z + half));
-            this.Lines.Add(line);
-
-            line = new Line3D(new Point3D(middle.X + half, middle.Y + half, middle.Z + half), new Point3D(middle.X + half, middle.Y + half, middle.Z - half));
-            this.Lines.Add(line);
+            Wall3D wall = new Wall3D(new Point3D(middle.X - half, middle.Y + half, middle.Z - half), new Point3D(middle.X - half, middle.Y + half, middle.Z + half), new Point3D(middle.X + half, middle.Y + half, middle.Z + half), new Point3D(middle.X + half, middle.Y + half, middle.Z - half));
+            this.Walls.Add(wall);
 
         }
         private void Sides(Point3D middle, double sideLength)
         {
             double half = sideLength / 2.0;
 
-            Line3D line = new Line3D(new Point3D(middle.X - half, middle.Y + half, middle.Z - half), new Point3D(middle.X - half, middle.Y - half, middle.Z - half));
-            this.Lines.Add(line);
+            Wall3D wall = new Wall3D(new Point3D(middle.X - half, middle.Y - half, middle.Z - half), new Point3D(middle.X - half, middle.Y - half, middle.Z + half), new Point3D(middle.X - half, middle.Y + half, middle.Z + half), new Point3D(middle.X - half, middle.Y + half, middle.Z - half));
+            this.Walls.Add(wall);
 
-            line = new Line3D(new Point3D(middle.X - half, middle.Y + half, middle.Z + half), new Point3D(middle.X - half, middle.Y - half, middle.Z + half));
-            this.Lines.Add(line);
+            wall = new Wall3D(new Point3D(middle.X + half, middle.Y - half, middle.Z - half), new Point3D(middle.X + half, middle.Y - half, middle.Z + half), new Point3D(middle.X + half, middle.Y + half, middle.Z + half), new Point3D(middle.X + half, middle.Y + half, middle.Z - half));
+            this.Walls.Add(wall);
 
-            line = new Line3D(new Point3D(middle.X + half, middle.Y + half, middle.Z - half), new Point3D(middle.X + half, middle.Y - half, middle.Z - half));
-            this.Lines.Add(line);
+            wall = new Wall3D(new Point3D(middle.X - half, middle.Y - half, middle.Z + half), new Point3D(middle.X + half, middle.Y - half, middle.Z + half), new Point3D(middle.X + half, middle.Y + half, middle.Z + half), new Point3D(middle.X - half, middle.Y + half, middle.Z + half));
+            this.Walls.Add(wall);
 
-            line = new Line3D(new Point3D(middle.X + half, middle.Y + half, middle.Z + half), new Point3D(middle.X + half, middle.Y - half, middle.Z + half));
-            this.Lines.Add(line);
-
+            wall = new Wall3D(new Point3D(middle.X - half, middle.Y - half, middle.Z - half), new Point3D(middle.X + half, middle.Y - half, middle.Z - half), new Point3D(middle.X + half, middle.Y + half, middle.Z - half), new Point3D(middle.X - half, middle.Y + half, middle.Z - half));
+            this.Walls.Add(wall);
         }
 
         public override string ToString()
         {
             string answer = "Cube:" + System.Environment.NewLine;
-            foreach (var line in this.Lines)
+            foreach (var wall in this.Walls)
             {
-                answer += line.ToString() + System.Environment.NewLine;
+                answer += wall.ToString() + System.Environment.NewLine;
             }
             return answer;
         }
 
-        public override List<Line3D> GetLines()
-        {
-            return this.Lines;
-        }
+
     }
 }

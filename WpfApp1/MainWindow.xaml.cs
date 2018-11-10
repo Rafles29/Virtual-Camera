@@ -123,14 +123,14 @@ namespace WpfApp1
             Cube cube7 = new Cube(new Point3D(2.0, 2.0, 14.0), 3.0);
             Cube cube8 = new Cube(new Point3D(-2.0, 2.0, 14.0), 3.0);
 
-            this.VirtualWorld.AddElement(cube);
-            this.VirtualWorld.AddElement(cube2);
-            this.VirtualWorld.AddElement(cube3);
-            this.VirtualWorld.AddElement(cube4);
-            this.VirtualWorld.AddElement(cube5);
-            this.VirtualWorld.AddElement(cube6);
-            this.VirtualWorld.AddElement(cube7);
-            this.VirtualWorld.AddElement(cube8);
+            this.VirtualWorld.AddElement(cube.Walls);
+            this.VirtualWorld.AddElement(cube2.Walls);
+            this.VirtualWorld.AddElement(cube3.Walls);
+            this.VirtualWorld.AddElement(cube4.Walls);
+            this.VirtualWorld.AddElement(cube5.Walls);
+            this.VirtualWorld.AddElement(cube6.Walls);
+            this.VirtualWorld.AddElement(cube7.Walls);
+            this.VirtualWorld.AddElement(cube8.Walls);
 
         }
         public void ClearFrame(Canvas canvas)
@@ -141,11 +141,11 @@ namespace WpfApp1
         public void Draw(Canvas canvas)
         {
             this.canvas.Children.Clear();
-            List<Line2D> lines2D = this.VirtualWorld.Generate2D();
-            List<Line2D> scaledLines2D = this.Scale(canvas, lines2D);
-            this.DrawLines(canvas, scaledLines2D);
+            List<Wall2D> walls2D = this.VirtualWorld.Generate2D();
+            List<Wall2D> scaledWalls2D = this.Scale(canvas, walls2D);
+            this.DrawPolygons(canvas, scaledWalls2D);
         }
-        private List<Line2D> Scale(Canvas canvas, List<Line2D> lines)
+        private List<Wall2D> Scale(Canvas canvas, List<Wall2D> walls)
         {
             var windowHeight = canvas.Height;
             var windowWidth = canvas.Width;
@@ -156,41 +156,42 @@ namespace WpfApp1
             double heightScale = windowHeight / cameraHeight;
             double widthScale = windowWidth / cameraWidth;
 
-            List<Line2D> output = new List<Line2D>();
+            List<Wall2D> output = new List<Wall2D>();
 
-            foreach (var line in lines)
+            foreach (var wall in walls)
             {
-                Point2D A = new Point2D(windowWidth / 2 + line.A.X * widthScale, windowHeight / 2 - line.A.Y * heightScale);
-                Point2D B = new Point2D(windowWidth / 2 + line.B.X * widthScale, windowHeight / 2 - line.B.Y * heightScale);
-                Line2D newLine = new Line2D(A,B);
-                Console.WriteLine(newLine);
-                output.Add(newLine);
+                Point2D A = new Point2D(windowWidth / 2 + wall.A.X * widthScale, windowHeight / 2 - wall.A.Y * heightScale);
+                Point2D B = new Point2D(windowWidth / 2 + wall.B.X * widthScale, windowHeight / 2 - wall.B.Y * heightScale);
+                Point2D C = new Point2D(windowWidth / 2 + wall.C.X * widthScale, windowHeight / 2 - wall.C.Y * heightScale);
+                Point2D D = new Point2D(windowWidth / 2 + wall.D.X * widthScale, windowHeight / 2 - wall.D.Y * heightScale);
+                Wall2D newWall = new Wall2D(A,B,C,D);
+                output.Add(newWall);
             }
             return output;
         }
 
-        private void DrawLine(Canvas canvas, Line2D line2D)
+        private void DrawPolygon(Canvas canvas, Wall2D wall)
         {
-            SolidColorBrush redBrush = new SolidColorBrush();
-            redBrush.Color = Colors.Red;
+            PointCollection myPointCollection = new PointCollection();
+            myPointCollection.Add(new Point(wall.A.X, wall.A.Y));
+            myPointCollection.Add(new Point(wall.B.X, wall.B.Y));
+            myPointCollection.Add(new Point(wall.C.X, wall.C.Y));
+            myPointCollection.Add(new Point(wall.D.X, wall.D.Y));
 
-            Line line = new Line()
-            {
-                Stroke = redBrush,
-                StrokeThickness = 2,
-                X1 = line2D.A.X,
-                X2 = line2D.B.X,
-                Y1 = line2D.A.Y,
-                Y2 = line2D.B.Y,
-            };
-            canvas.Children.Add(line);
+            Polygon myPolygon = new Polygon();
+            myPolygon.Points = myPointCollection;
+            myPolygon.Fill = Brushes.White;
+            myPolygon.Stroke = Brushes.Black;
+            myPolygon.StrokeThickness = 2;
+
+            canvas.Children.Add(myPolygon);
             
         }
-        private void DrawLines(Canvas canvas, List<Line2D> lines)
+        private void DrawPolygons(Canvas canvas, List<Wall2D> walls)
         {
-            foreach (var line in lines)
+            foreach (var wall in walls)
             {
-                this.DrawLine(canvas, line);
+                this.DrawPolygon(canvas, wall);
             }
         }
     }

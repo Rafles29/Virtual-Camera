@@ -8,29 +8,29 @@ namespace WpfApp1
 {
     public class VirtualWorld
     {
-        public List<Object3D> Objects { get; set; }
+        public List<Wall3D> Walls { get; set; }
         public VirtualCamera VirtualCamera { get; set; }
 
         public VirtualWorld()
         {
-            Objects = new List<Object3D>();
+            Walls = new List<Wall3D>();
             this.VirtualCamera = new VirtualCamera(new Point3D(0.0, 0.0, 0.0), 2.0, 2.0, 2.0);
         }
 
-        public void AddElement(Object3D obj)
+        public void AddElement(List<Wall3D> obj)
         {
-            this.Objects.Add(obj);
+            this.Walls.AddRange(obj);
         }
         public void Move(Direction direction)
         {
-            foreach (var obj in Objects)
+            foreach (var obj in Walls)
             {
                 obj.Move(direction);
             }
         }
         public void Rotate(Direction direction)
         {
-            foreach (var obj in Objects)
+            foreach (var obj in Walls)
             {
                 obj.Rotate(direction);
             }
@@ -43,9 +43,9 @@ namespace WpfApp1
         {
             this.VirtualCamera.ZoomOut();
         }
-        public List<Line2D> Generate2D()
+        public List<Wall2D> Generate2D()
         {
-            return this.VirtualCamera.Calculate(Objects);
+            return this.VirtualCamera.Calculate(Walls);
         }
     }
 }
