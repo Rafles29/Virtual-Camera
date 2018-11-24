@@ -47,5 +47,42 @@ namespace WpfApp1
         {
             return this.VirtualCamera.Calculate(Walls);
         }
+        public void DivideWalls(int divider)
+        {
+            var smallWalls = new List<Wall3D>();
+            foreach (var wall in Walls)
+            {
+                smallWalls.AddRange(DivideWallSimple(wall, divider));
+            }
+            this.Walls = smallWalls;
+        }
+
+        private IEnumerable<Wall3D> DivideWallSimple(Wall3D wall, int divider)
+        {
+            List<Wall3D> walls = new List<Wall3D>();
+            var x1 = (wall.B.X - wall.A.X)/divider;
+            var y1 = (wall.B.Y - wall.A.Y)/ divider;
+            var z1 = (wall.B.Z - wall.A.Z)/ divider;
+
+            var x2 = (wall.D.X - wall.A.X)/ divider;
+            var y2 = (wall.D.Y - wall.A.Y)/ divider;
+            var z2 = (wall.D.Z - wall.A.Z)/ divider;
+
+            for (int i = 0; i < divider; i++)
+            {
+                for (int j = 0; j < divider; j++)
+                {
+
+                    Point3D pointA = new Point3D(wall.A.X + j * x1 + i * x2, wall.A.Y + j * y1 + i * y2, wall.A.Z + j * z1 + i * z2);
+                    Point3D pointB = new Point3D(wall.A.X + (j + 1) * x1 + i * x2, wall.A.Y + (j + 1) * y1 + i * y2, wall.A.Z + (j + 1) * z1 + i * z2);
+                    Point3D pointC = new Point3D(wall.A.X + (j + 1) * x1 + (i + 1) * x2, wall.A.Y + (j + 1) * y1 + (i + 1) * y2, wall.A.Z + (j + 1) * z1 + (i + 1) * z2);
+                    Point3D pointD = new Point3D(wall.A.X + j * x1 + (i + 1) * x2, wall.A.Y + j * y1 + (i + 1) * y2, wall.A.Z + j * z1 + (i + 1) * z2);
+                    Wall3D newWall = new Wall3D(pointA, pointB, pointC, pointD);
+                    walls.Add(newWall);
+                }
+            }
+            return walls;
+
+        }
     }
 }

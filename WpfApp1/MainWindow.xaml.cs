@@ -132,6 +132,8 @@ namespace WpfApp1
             this.VirtualWorld.AddElement(cube7.Walls);
             this.VirtualWorld.AddElement(cube8.Walls);
 
+            this.VirtualWorld.DivideWalls(4);
+
         }
         public void ClearFrame(Canvas canvas)
         {
