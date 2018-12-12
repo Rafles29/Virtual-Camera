@@ -96,7 +96,7 @@ namespace WpfApp1
             shadedBitmap = new Bitmap(500, 500);
             Graphics g = Graphics.FromImage(shadedBitmap);
             g.Clear(System.Drawing.Color.Black);
-            g.FillEllipse(new SolidBrush(System.Drawing.Color.Red), 100, 100, 300, 300);
+            g.FillEllipse(new SolidBrush(System.Drawing.Color.DarkBlue), 100, 100, 300, 300);
             image.Source = ImageSourceForBitmap(shadedBitmap);
 
             phongOperator = new PhongOperator();

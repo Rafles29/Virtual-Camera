@@ -68,32 +68,32 @@ namespace Grafika.Logic
 
         public void MoveRight()
         {
-            Source.Y = Source.Y + Step;
+            Source.Y += Step;
         }
 
         public void MoveLeft()
         {
-            Source.Y = Source.Y - Step;
+            Source.Y -= Step;
         }
 
         public void Forward()
         {
-            Source.Z = Source.Z + Step;
+            Source.Z += Step;
         }
 
         public void Backward()
         {
-            Source.Z = Source.Z - Step;
+            Source.Z -= Step;
         }
 
         public void Up()
         {
-            Source.Z = Source.Z + Step;
+            Source.X -= Step;
         }
 
         public void Down()
         {
-            Source.Z = Source.Z - Step;
+            Source.X += Step;
 
         }
 
