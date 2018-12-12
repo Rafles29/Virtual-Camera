@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,32 +56,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="VC\CohenSutherland.cs" />
-    <Compile Include="VC\Line2D.cs" />
-    <Compile Include="VC\PerspectiveProjection.cs" />
-    <Compile Include="VC\Point2D.cs" />
-    <Compile Include="VC\VirtualCamera.cs" />
-    <Compile Include="VC\VirtualWorld.cs" />
-    <Compile Include="VC\Wall2D.cs" />
-    <Compile Include="VC\Wall3D.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="VC\Cube.cs" />
-    <Compile Include="VC\Line3D.cs" />
-    <Compile Include="VC\Object3D.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\LockBitmap.cs" />
+    <Compile Include="Logic\PhongOperator.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="VC\Point3D.cs" />
+    <Compile Include="Model\Point3D.cs" />
+    <Compile Include="Model\Surface.cs" />
+    <Compile Include="Model\Vector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -106,5 +100,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

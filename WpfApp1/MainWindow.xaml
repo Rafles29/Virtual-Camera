@@ -14,7 +14,7 @@
     </Window.Resources>
     <Grid>
 
-        <Canvas HorizontalAlignment="Left" Height="600" Margin="0,0,0,0" VerticalAlignment="Top" Width="600" Name="canvas" RenderTransformOrigin="0.5,0.5" KeyDown="OnKeyDownHandler"/>
+        <Image HorizontalAlignment="Left" Height="500" Margin="0,0,0,0" VerticalAlignment="Top" Width="500" Name="image" RenderTransformOrigin="0.5,0.5" KeyDown="OnKeyDownHandler"/>
         
 
     </Grid>
